@@ -21,9 +21,8 @@ router.post("/register", async (req, res) => {
 // Host Login Route
 router.post("/login", async (req, res) => {
   const { name, password } = req.body;
-
   try {
-    const host = await Host.findOne({ name });
+    const host = await Host.findOne({ email:name });
     if (!host) {
       return res.status(401).json({ message: "Invalid name or password" });
     }
@@ -36,8 +35,12 @@ router.post("/login", async (req, res) => {
     // Store user information in session (assuming sessions are set up)
     req.session.hostId = host._id;
     req.session.save();
-
-    res.status(200).json({ message: "Login successful", host });
+    console.log("first")
+    res.status(200).json({ message: "Login successful", host:{
+      id: host._id,
+      name: host.name,
+      email: host.email
+    } });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
     console.error(err);

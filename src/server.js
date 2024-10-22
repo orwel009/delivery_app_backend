@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import hostRoutes from "./routes/authRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js"
 import { Server } from "socket.io";
 import { createServer } from "http";
 // import hostLoginRoutes from './routes/hostLoginRoutes.js';
@@ -45,6 +46,7 @@ mongoose
 
 // Routes
 app.use("/auth", hostRoutes);
+app.use("/order", orderRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
